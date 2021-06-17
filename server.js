@@ -11,8 +11,6 @@ let srv = http.createServer().listen(configs.port).on('listening', () => {
 srv.on('request', (req, res) => {
   let reqByUser = req.headers.referer === undefined || req.headers['sec-fetch-mode'] === "navigate"
   
-  console.log(reqByUser);
-
   let reqURL = ('http://'+req.headers.host).split('http://').join('http://') + req.url
 
   let urlInfos = url.parse(decodeURI(reqURL))

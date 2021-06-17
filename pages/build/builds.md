@@ -1,6 +1,6 @@
 {
     "name":"Fichier exemple build",
-    "description":"Ceci est un fichier exemple pour la partie 'build'"
+    "description":"Ceci est un fichier exemple pour la partie \"build\""
 }
 <===>
 

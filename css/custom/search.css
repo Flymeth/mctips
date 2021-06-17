@@ -1,0 +1,27 @@
+body {
+    padding: 5pt;
+    max-height: 100vh;
+    background-color: lemonchiffon;
+}
+
+body > h1 {
+    text-align: center;
+}
+
+.result {
+    margin-top: 5vh;
+    overflow-y: scroll;
+    max-height: 75vh;
+
+    background-color: lightcoral;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+article {
+    height: 50vh;
+    display: inline-block;
+    margin: 25pt 0;
+}

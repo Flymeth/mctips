@@ -7,6 +7,7 @@
     <title>Search result</title>
     
     <link rel="stylesheet" href="/css/_init.css">
+    <link rel="stylesheet" href="/css/custom/search.css">
 </head>
 <body>
     <h1>Your search result:</h1>
@@ -15,35 +16,43 @@
     </div>
 
     <script>
-
-        let testData = [
-            {
-                "p":15
-            },
-            {
-                "p": 16
-            }
-        ]
-        let r = document.querySelector('.result')
+        let articlesContainer = document.querySelector('.result')
 
         let result = " result "
         typeof result === JSON
 
         let datas = result.sort((d1,d2) => d2.searchPoints - d1.searchPoints)
+        let elementPrefix = '__'
 
-        for(let d of datas) {
-            let article = document.createElement('article')
-            article.innerHTML = `
-                <div class="content">
-                    <h2>${d.name}${d.version ? ' (' + d.version + ')' : ''}</h2>
-                    <p>${d.desc}</p>
-                </div>
-                <a href="/${d.path}">GO!</a>
-            `
-            document.body.appendChild(article)
+        let xhr = new XMLHttpRequest()
+        xhr.open("GET","article_template.html")
+        xhr.send()
+        xhr.onload = () => {
+            for(let d of datas) {
+                let doc = xhr.responseXML.documentElement
+
+                let template = document.createElement(doc.tagName)
+                typeof template === XMLDocument
+                template.innerHTML = doc.innerHTML
+                
+                for(let e in d) {
+                    let docString = template.innerHTML.split(elementPrefix + e)
+                    let elements = template.querySelectorAll(`.${elementPrefix}${e}`)
+
+                    if(elements.length > 0) {
+                        elements.forEach(el => {
+                            el.innerText = '(' + d[e] + ')'
+                        })
+                    }else if(docString.length > 1) {
+                        template.innerHTML = docString.join(d[e])
+                    }
+                }
+
+                articlesContainer.appendChild(template)
+            }
+
         }
 
-        r.parentElement.removeChild(r)
     </script>
 </body>
 </html>
