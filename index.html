@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCTips</title>
+
+    <link rel="shortcut icon" href="/Assets/Images/logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/_init.css">
+</head>
+<body>
+    <main>
+        <header>
+            <a href="/">
+                <img src="/Assets/Images/logo.svg" alt="Logo MCTips">
+            </a>
+
+            <h1>MCTips</h1>
+    
+            <nav>
+                <form method="GET" class="search">
+                    <input type="text" name="search" id="search" placeholder="search articles" tabindex="1">
+                </form>
+    
+                <div class="menu">
+                    <div class="oppener">
+                        <form method="dialog">
+                            <input type="checkbox" name="menu" id="menu" style="display: none;">
+
+                            <label for="menu">
+                                menu
+
+                                <div class="bars">
+                                    <div class="bar1"></div>
+                                    <div class="bar2"></div>
+                                    <div class="bar3"></div>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+    
+                    <div class="menu-content">
+                        <ul>
+                            <li class="title">Build</li>
+                            <li><!-- Name here --></li>
+                        </ul>
+                        <ul>
+                            <li class="title">Redstone</li>
+                            <li><!-- Name here --></li>
+                        </ul>
+                        <ul>
+                            <li class="title">Command block</li>
+                            <li><!-- Name here --></li>
+                        </ul>
+                        <ul>
+                            <li class="title">Autre</li>
+                            <li><!-- Name here --></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            Besoin d'un coup de pouce sur Minecraft ?
+            <br>
+            <a href="/">MCTips</a> est là!
+        </div>
+    </main>
+
+    <footer>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur quia voluptate facere accusamus, dolorem hic eius ipsa vero adipisci odit corporis ut eum libero totam doloribus maiores cum officiis veritatis.
+        Provident quae officiis accusantium a dolores, hic quo voluptatum saepe temporibus ex nemo nihil voluptate odit corrupti sunt cum. Asperiores, dolores soluta assumenda consequuntur numquam libero est perferendis qui minus?
+    </footer>
+
+    <script>
+        let menuBTN = document.querySelector('#menu')
+        let nav = document.querySelector('nav')
+        menuBTN.addEventListener('change', (e) => {
+            if(e.target.checked) {
+                nav.classList.add('open')
+            }else {
+                nav.classList.remove('open')
+            }
+        })
+    </script>
+</body>
+</html>

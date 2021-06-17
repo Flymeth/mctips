@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search result</title>
+    
+    <link rel="stylesheet" href="/css/_init.css">
+</head>
+<body>
+    <h1>Your search result:</h1>
+
+    <div class="result">
+    </div>
+
+    <script>
+
+        let testData = [
+            {
+                "p":15
+            },
+            {
+                "p": 16
+            }
+        ]
+        let r = document.querySelector('.result')
+
+        let result = " result "
+        typeof result === JSON
+
+        let datas = result.sort((d1,d2) => d2.searchPoints - d1.searchPoints)
+
+        for(let d of datas) {
+            let article = document.createElement('article')
+            article.innerHTML = `
+                <div class="content">
+                    <h2>${d.name}${d.version ? ' (' + d.version + ')' : ''}</h2>
+                    <p>${d.desc}</p>
+                </div>
+                <a href="/${d.path}">GO!</a>
+            `
+            document.body.appendChild(article)
+        }
+
+        r.parentElement.removeChild(r)
+    </script>
+</body>
+</html>

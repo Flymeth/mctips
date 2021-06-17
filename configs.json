@@ -1,0 +1,19 @@
+{
+    "port": 80,
+    "named": {
+        "system": "sys",
+        "search": "search",
+        "prevent": "prevent"
+    },
+    "main_path": "pages/",
+    "replacers": {
+        "articles": "{{ article }}",
+        "searchers": "\" result \""
+    },
+    "html_files": {
+        "index": "index.html",
+        "articles": "article.html",
+        "searchers": "search.html"
+    },
+    "md_desc_ender":"<===>"
+}

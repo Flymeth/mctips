@@ -1,0 +1,30 @@
+/* fonts */
+@import url('http://fonts.cdnfonts.com/css/minecraftia');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
+
+/* css styles */
+@import 'header.css';
+@import 'main.css';
+
+/* variables */
+:root {
+    --main-color: #249e38;
+    --secondary-color: #543a13
+}
+
+*,::before,::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Titillium Web', sans-serif;
+    
+    overflow: hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Minecraftia', sans-serif;
+}
