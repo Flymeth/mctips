@@ -159,6 +159,7 @@ srv.on('request', (req, res) => {
           "name": props.name,
           "desc": props.description,
           "version": props.version,
+          "banner": props.banner,
           "content": elements[1],
           "path": link.link,
           "searchPoints": searchPoints

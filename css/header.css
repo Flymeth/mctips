@@ -1,21 +1,32 @@
 header {
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50pt;
-
-    background-color: aqua;
+    height: 10vh;
+    
+    background: url(/Assets/blocks/grass-header.png);
+    background-size: contain;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     padding: 5pt 10pt;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 header img, header>a {
-    height: 100%;
+    height: 80%;
+}
+
+header h1 {
+    color: var(--color-black);
+    line-height: 25pt;
+    text-shadow: none;
 }
 
 header nav {
@@ -38,9 +49,13 @@ header nav form input {
 
     border-radius: 2.5pt;
     outline: none;
-    border: 1.5pt solid var(--secondary-color);
+    border: 1.5pt solid var(--color-black);
 
     padding: 1.5pt 3pt;
+}
+
+header nav .menu {
+    position: relative;
 }
 
 header nav .menu label {
@@ -55,10 +70,15 @@ header nav .menu label {
 
     text-transform: uppercase;
 
-    border: 2.5pt solid var(--main-color);
+    border: 2.5pt solid var(--color-marroun);
     border-radius: 2.5pt;
 
     padding: 2.5pt 5pt;
+
+    transition: border-radius .25s;
+}
+header nav.open .menu label {
+    border-radius: 2.5pt 2.5pt 0 0;
 }
 
 
@@ -99,7 +119,7 @@ header nav .menu .menu-content {
 
     opacity: 0;
 
-    background-color: brown;
+    background-color: var(--color-marroun);
 
     padding: 5pt;
 

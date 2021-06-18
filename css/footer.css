@@ -1,0 +1,9 @@
+footer {
+    padding: 15pt;
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+footer a {
+    color: inherit;
+}

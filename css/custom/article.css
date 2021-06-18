@@ -1,0 +1,11 @@
+@import '../_init.css';
+
+main>h1 {
+    text-align: center;
+}
+
+article {
+    background-color: var(--color-darkgreen);
+    padding: 15pt;
+    border-radius: 15pt;
+}

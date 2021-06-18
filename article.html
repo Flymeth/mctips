@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
 
-    <link rel="stylesheet" href="/css/_init.css">
+    <link rel="stylesheet" href="/css/custom/article.css">
 </head>
 
 <body>
-  <h1>Here is the article:</h1>
-  <article style="background-color: rgba(0,0,0,.25)">
-    {{ article }}
-  </article>
+  <main>
+    <h1>Here is the article:</h1>
+    <div class="main-content">
+      <article>
+        {{ article }}
+      </article>
+    </div>
+  </main>
 
   <footer>
     <a href="/">back to home</a>

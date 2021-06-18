@@ -1,0 +1,35 @@
+@import '../_init.css';
+
+.hero {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero .img {
+    width: 55%;
+    height: 75%;
+}
+
+.hero .img img {
+    height: 100%;
+}
+
+.hero .texts {
+    padding: 5pt;
+}
+
+.hero .texts h1 {
+    font-size: 7.5vh;
+}
+.hero .texts h1>span {
+    color: var(--color-darkgreen);
+    text-shadow: 0 0 15.5pt var(--color-white);
+}
+
+.hero .texts p {
+    color: var(--color-blue);
+    text-shadow: 0 0 5.5pt var(--color-black);
+}

@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search result</title>
     
-    <link rel="stylesheet" href="/css/_init.css">
     <link rel="stylesheet" href="/css/custom/search.css">
 </head>
 <body>
-    <h1>Your search result:</h1>
-
-    <div class="result">
-    </div>
+    <main>
+        <h1>Your search result:</h1>
+    
+        <div class="result">
+        </div>
+    </main>
 
     <script>
         let articlesContainer = document.querySelector('.result')
@@ -29,11 +30,11 @@
         xhr.send()
         xhr.onload = () => {
             for(let d of datas) {
-                let doc = xhr.responseXML.documentElement
+                let doc = xhr.response
 
-                let template = document.createElement(doc.tagName)
+                let template = document.createElement('article')
                 typeof template === XMLDocument
-                template.innerHTML = doc.innerHTML
+                template.innerHTML = doc
                 
                 for(let e in d) {
                     let docString = template.innerHTML.split(elementPrefix + e)
@@ -46,6 +47,18 @@
                     }else if(docString.length > 1) {
                         template.innerHTML = docString.join(d[e])
                     }
+                }
+
+                // check if element with "src" attribute as a src content
+                let src = template.querySelectorAll('*[src]')
+                if(src.length>0) {
+                    src.forEach(s => {
+                        let url = new URL(s.src)
+                        let needDel = url.pathname.startsWith('/' + elementPrefix)
+                        if(needDel) {
+                            s.parentElement.removeChild(s)
+                        }
+                    })
                 }
 
                 articlesContainer.appendChild(template)

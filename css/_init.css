@@ -1,15 +1,20 @@
 /* fonts */
-/* @import url('http://fonts.cdnfonts.com/css/minecraftia'); */
-/* @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap'); */
+@import url('http://fonts.cdnfonts.com/css/minecraftia');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
 
 /* css styles */
 @import 'header.css';
 @import 'main.css';
+@import 'footer.css';
 
 /* variables */
 :root {
-    --main-color: #249e38;
-    --secondary-color: #543a13
+    --color-black: #0E1116;
+    --color-white: #FFF1D0;
+    --color-blue: #86BBD8;
+    --color-green: #63C132;
+    --color-darkgreen: #036016;
+    --color-marroun: #B86F52;
 }
 
 *,::before,::after {
@@ -22,9 +27,19 @@ body {
     min-height: 100vh;
     font-family: 'Titillium Web', sans-serif;
     
-    overflow: hidden;
+    background-color: var(--color-white);
+    color: var(--color-black);
+
+    overflow-x: hidden;
 }
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Minecraftia', sans-serif;
+    color: var(--color-black);
+}
+
+h1{
+    color: var(--color-green);
+
+    text-shadow: .5pt .5pt 25pt var(--color-black);
 }
