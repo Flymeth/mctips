@@ -1,9 +1,31 @@
+:root {
+    --bg-size: 35pt;
+}
 footer {
     padding: 15pt;
-    background-color: var(--color-black);
+    padding-top: 25pt;
+    background-image: url(/Assets/blocks/dirt.jpg);
+    background-size: var(--bg-size);
     color: var(--color-white);
+    text-shadow: .5pt .5pt 2.5pt var(--color-black);
+    height: 100vh;
+    position: relative;
 }
-
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(var(--bg-size) / 4);
+    width: 100%;
+    
+    background-image: url(/Assets/blocks/grass_side.png);
+    background-size: var(--bg-size);
+    background-repeat: repeat-x;
+}
+footer>* {
+    z-index: 2;
+}
 footer a {
     color: inherit;
 }

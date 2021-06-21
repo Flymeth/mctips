@@ -1,9 +1,8 @@
 main {
-    background-image: url(/Assets/blocks/dirt.jpg);
-    background-size: 50pt;
     min-height: 100vh;
+    background-color: var(--color-sky);
 }
 
-main .main-content {
+main .content {
     padding: 5pt;
 }

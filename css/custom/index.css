@@ -5,16 +5,26 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+
+    background-image: url(/Assets/Images/header.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    padding: 15pt;
 }
 
 .hero .img {
-    width: 55%;
+    width: 75%;
     height: 75%;
+    max-width: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .hero .img img {
-    height: 100%;
+    width: 100%;
 }
 
 .hero .texts {
@@ -30,6 +40,6 @@
 }
 
 .hero .texts p {
-    color: var(--color-blue);
+    color: var(--color-black);
     text-shadow: 0 0 5.5pt var(--color-black);
 }

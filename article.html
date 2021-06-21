@@ -11,8 +11,57 @@
 
 <body>
   <main>
-    <h1>Here is the article:</h1>
-    <div class="main-content">
+
+    <header>
+      <img src="/Assets/Images/logo.svg" alt="Logo MCTips">
+      
+      <h1>The article</h1>
+
+      <nav>
+          <form method="GET" class="search">
+              <input type="text" name="search" id="search" placeholder="search articles" tabindex="1">
+          </form>
+
+          <div class="menu">
+              <div class="oppener">
+                  <form method="dialog">
+                      <input type="checkbox" name="menu" id="menu" style="display: none;">
+
+                      <label for="menu">
+                          menu
+
+                          <div class="bars">
+                              <div class="bar1"></div>
+                              <div class="bar2"></div>
+                              <div class="bar3"></div>
+                          </div>
+                      </label>
+                  </form>
+              </div>
+
+              <div class="menu-content">
+                  <ul>
+                      <li class="title">Build</li>
+                      <li><!-- Name here --></li>
+                  </ul>
+                  <ul>
+                      <li class="title">Redstone</li>
+                      <li><!-- Name here --></li>
+                  </ul>
+                  <ul>
+                      <li class="title">Command block</li>
+                      <li><!-- Name here --></li>
+                  </ul>
+                  <ul>
+                      <li class="title">Autre</li>
+                      <li><!-- Name here --></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+    </header>
+
+    <div class="content">
       <article>
         {{ article }}
       </article>
@@ -22,5 +71,7 @@
   <footer>
     <a href="/">back to home</a>
   </footer>
+
+  <script src="/js/headerMENU.js"></script>
 </body>
 </html>

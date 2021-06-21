@@ -1,23 +1,41 @@
 @import '../_init.css';
 
-body {
-    max-height: 100vh;
-    background-color: lemonchiffon;
+header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
 }
+
+main>.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    height: 100vh;
+
+    z-index: 2;
+}
+
 
 body h1 {
     text-align: center;
 }
 
+.result-scroller {
+    width: 50%;
+    overflow-y: scroll;
+    max-height: 80%;
+    margin: 15pt;
+}
+
 .result {
-    width: 75vw;
-
-    margin: 15pt auto;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+
+    width: 100%;
 }
 
 article {
@@ -26,8 +44,10 @@ article {
     border-radius: 5pt;
     background-color: var(--color-green);
 
-    width: 20vw;
-    height: 50vh;
+    width: 75%;
+    min-height: 25vh;
+
+    box-shadow: 5pt 5pt 15pt var(--color-blue);
 }
 
 article img {

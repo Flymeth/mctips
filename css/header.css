@@ -4,12 +4,9 @@ header {
     left: 0;
     width: 100%;
     height: 10vh;
-    
-    background: url(/Assets/blocks/grass-header.png);
-    background-size: contain;
 
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     padding: 5pt 10pt;
 
@@ -17,9 +14,14 @@ header {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px);
+
+    box-shadow: 0 0 25pt var(--color-blue);
 }
 
-header img, header>a {
+header img {
     height: 80%;
 }
 
