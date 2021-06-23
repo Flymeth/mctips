@@ -12,24 +12,27 @@
 </head>
 <body>
     <main>
+
         <header>
             <img src="/Assets/Images/logo.svg" alt="Logo MCTips">
-
+        
             <h1>MCTips</h1>
-    
+        
             <nav>
                 <form method="GET" class="search">
                     <input type="text" name="search" id="search" placeholder="search articles" tabindex="1">
                 </form>
-    
+        
                 <div class="menu">
                     <div class="oppener">
                         <form method="dialog">
                             <input type="checkbox" name="menu" id="menu" style="display: none;">
-
+        
                             <label for="menu">
-                                menu
-
+                                <sub>
+                                    menu
+                                </sub>
+        
                                 <div class="bars">
                                     <div class="bar1"></div>
                                     <div class="bar2"></div>
@@ -38,22 +41,22 @@
                             </label>
                         </form>
                     </div>
-    
+        
                     <div class="menu-content">
                         <ul>
-                            <li class="title">Build</li>
+                            <li class="title"><a href="?search&domain=build">Build</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Redstone</li>
+                            <li class="title"><a href="?search&domain=redstone">Redstone</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Command block</li>
+                            <li class="title"><a href="?search&domain=commands">Commandes</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Autre</li>
+                            <li class="title"><a href="?search&domain=other">Autre</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                     </div>

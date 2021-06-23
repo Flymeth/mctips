@@ -37,17 +37,15 @@ header nav {
     justify-content: flex-end;
 }
 
-header nav>* {
-    margin-left: 5pt;
-}
-
-header nav form {
+header nav>form {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin: 0 5pt;
 }
+
 header nav form input {
-    width: 75%;
+    width: 100%;
 
     border-radius: 2.5pt;
     outline: none;
@@ -112,6 +110,14 @@ header nav.open .menu .bars>.bar2 {
 header nav.open .menu .bars>.bar3{
     transform-origin: bottom left;
     transform: rotate(-45deg);
+}
+
+header nav .menu a {
+    color: inherit;
+    text-decoration: none;
+}
+header nav .menu a:hover {
+    text-decoration: underline;
 }
 
 header nav .menu .menu-content {

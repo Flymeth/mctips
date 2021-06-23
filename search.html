@@ -39,19 +39,19 @@
     
                     <div class="menu-content">
                         <ul>
-                            <li class="title">Build</li>
+                            <li class="title"><a href="?search&domain=build">Build</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Redstone</li>
+                            <li class="title"><a href="?search&domain=redstone">Redstone</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Command block</li>
+                            <li class="title"><a href="?search&domain=commands">Commandes</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                         <ul>
-                            <li class="title">Autre</li>
+                            <li class="title"><a href="?search&domain=other">Autre</a></li>
                             <li><!-- Name here --></li>
                         </ul>
                     </div>
@@ -80,7 +80,7 @@
         let elementPrefix = '__'
 
         let xhr = new XMLHttpRequest()
-        xhr.open("GET","article_template.html")
+        xhr.open("GET","/templates/article.html")
         xhr.send()
         xhr.onload = () => {
             for(let d of datas) {

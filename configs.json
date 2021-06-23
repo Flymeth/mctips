@@ -3,6 +3,7 @@
     "named": {
         "system": "sys",
         "search": "search",
+        "type": "domain",
         "prevent": "prevent"
     },
     "main_path": "pages/",

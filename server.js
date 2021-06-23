@@ -19,11 +19,13 @@ srv.on('request', (req, res) => {
   let sysName;
   let sysSearch;
   let prevent;
+  let sysSearchType;
 
   if(urlInfos.query) {
     sysType = urlInfos.pathname.replace('/','')
     sysName = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.system)
     sysSearch = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.search)
+    sysSearchType = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.type)
     prevent = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.prevent)
   }
   
@@ -39,8 +41,8 @@ srv.on('request', (req, res) => {
     })
   }
 
-
-  if(sysName && !sysSearch) {
+  // article
+  if(sysName) {
 
     // READ TIPS
 
@@ -67,7 +69,10 @@ srv.on('request', (req, res) => {
     
     return res.end(initPage)
 
-  }else if(sysSearch && !sysName) {
+  }
+  
+  // search articles
+  if(sysSearch) {
 
     // SEARCH TIPS
 
@@ -78,6 +83,25 @@ srv.on('request', (req, res) => {
     } catch (e) {
       console.log(e);
       return res.end('An error as come. Developer has been target!')
+    }
+
+    if(sysSearchType) {
+      try {
+
+        let newSct = []
+        let searchTypes = decodeURI(sysSearchType).replace(' '+'+').split('=')[1].split('+')
+        for(let fType of sct) {
+          for(let type of searchTypes) {
+            if(fType === type) {
+              newSct.push(fType)
+            }
+          }
+        }
+        sct = newSct
+
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     for(let f of sct) {
@@ -97,12 +121,17 @@ srv.on('request', (req, res) => {
       }
     }
 
-    
-    let searchKeys = sysSearch.toString().split('=')[1].split('%20').join('+').toLowerCase().split('+')
-    if(searchKeys.length === 1 && searchKeys[0] === '') return goIndex()
+    let searchKeys;
 
-    if(searchKeys[0] === "__all") {
+    if(sysSearch.split('=').length == 1) {
       searchKeys = " "
+    }else {
+      searchKeys = sysSearch.toString().split('=')[1].split('%20').join('+').toLowerCase().split('+')
+      if(searchKeys.length === 1 && searchKeys[0] === '') return goIndex()
+      
+      if(searchKeys[0] === "__all") {
+        searchKeys = " "
+      }
     }
 
     let articlesFounded = []
@@ -183,17 +212,13 @@ srv.on('request', (req, res) => {
     file = file.toString().replace(configs.replacers.searchers, stringDatas)
 
     return res.end(file)
-  }else if(sysName && sysSearch) {
-
-    // SEARCH AND READ ERROR
-
-    return res.end('Cannot search and find articles at the same time man the fucker...')
-  }else {
-
-    // INDEX
-    goIndex()
   }
+  
+  // if there isn't a search/prevent/... return to the index of the webapp
+  goIndex()
 
+
+  // define the function goIndex()
   function goIndex() {
     fs.readFile(configs.html_files.index, (err, f) => {
       if(err) return res.end('OUPS... A probleme come here...')
