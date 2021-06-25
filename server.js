@@ -20,6 +20,7 @@ srv.on('request', (req, res) => {
   let sysSearch;
   let prevent;
   let sysSearchType;
+  let sysDomain;
 
   if(urlInfos.query) {
     sysType = urlInfos.pathname.replace('/','')
@@ -39,6 +40,15 @@ srv.on('request', (req, res) => {
       }
       res.end(f)
     })
+  }
+
+  let path = urlInfos.pathname.replace('/','')
+
+  for(let type of configs.domain_types_path) {
+    if(path === type) {
+      sysDomain = path
+      if(!sysSearch) sysSearch = configs.prefix_show_all_articles
+    }
   }
 
   // article
@@ -85,11 +95,10 @@ srv.on('request', (req, res) => {
       return res.end('An error as come. Developer has been target!')
     }
 
-    if(sysSearchType) {
+    if(sysSearchType || sysDomain) {
       try {
-
         let newSct = []
-        let searchTypes = decodeURI(sysSearchType).replace(' '+'+').split('=')[1].split('+')
+        let searchTypes = sysDomain ? [sysDomain] : decodeURI(sysSearchType).replace(' '+'+').split('=')[1].split('+')
         for(let fType of sct) {
           for(let type of searchTypes) {
             if(fType === type) {
@@ -123,13 +132,13 @@ srv.on('request', (req, res) => {
 
     let searchKeys;
 
-    if(sysSearch.split('=').length == 1) {
+    if(sysSearch.split('=').length == 1 || sysSearch === configs.prefix_show_all_articles) {
       searchKeys = " "
     }else {
       searchKeys = sysSearch.toString().split('=')[1].split('%20').join('+').toLowerCase().split('+')
       if(searchKeys.length === 1 && searchKeys[0] === '') return goIndex()
       
-      if(searchKeys[0] === "__all") {
+      if(searchKeys[0] === configs.prefix_show_all_articles) {
         searchKeys = " "
       }
     }
@@ -150,8 +159,8 @@ srv.on('request', (req, res) => {
       try {
         var props = JSON.parse(elements[0])
       } catch (error) {
-        console.log(error);
-        return res.end('Articles unreadible')
+        console.error("ARTICLE UNREADIBLE", link)
+        continue
       }
 
       let infos = {

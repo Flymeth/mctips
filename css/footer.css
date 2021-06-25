@@ -8,7 +8,7 @@ footer {
     background-size: var(--bg-size);
     color: var(--color-white);
     text-shadow: .5pt .5pt 2.5pt var(--color-black);
-    height: 100vh;
+    /* min-height: 100vh; */
     position: relative;
 }
 footer::before {

@@ -23,9 +23,7 @@ body h1 {
 }
 
 .result-scroller {
-    width: 50%;
-    overflow-y: scroll;
-    max-height: 80%;
+    width: 65%;
     margin: 15pt;
 }
 

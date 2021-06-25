@@ -6,15 +6,22 @@
         "type": "domain",
         "prevent": "prevent"
     },
-    "main_path": "pages/",
+    "main_path": "./pages/",
     "replacers": {
         "articles": "{{ article }}",
         "searchers": "\" result \""
     },
     "html_files": {
-        "index": "index.html",
-        "articles": "article.html",
-        "searchers": "search.html"
+        "index": "./client/index.html",
+        "articles": "./client/article.html",
+        "searchers": "./client/search.html"
     },
-    "md_desc_ender":"<===>"
+    "md_desc_ender":"<===>",
+    "domain_types_path": [
+        "redstone",
+        "commands",
+        "build",
+        "other"
+    ],
+    "prefix_show_all_articles": "__all"
 }

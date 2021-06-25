@@ -12,6 +12,9 @@
     background-repeat: no-repeat;
 
     padding: 15pt;
+    
+    color: var(--color-black);
+    text-shadow: 0 0 5.5pt var(--color-black);
 }
 
 .hero .img {
@@ -25,6 +28,7 @@
 
 .hero .img img {
     width: 100%;
+    max-width: 500px;
 }
 
 .hero .texts {
@@ -39,7 +43,16 @@
     text-shadow: 0 0 15.5pt var(--color-white);
 }
 
-.hero .texts p {
-    color: var(--color-black);
-    text-shadow: 0 0 5.5pt var(--color-black);
+.hero form {
+    margin-top: 2.5vh;
+}
+.hero #search-hero {
+    outline: none;
+    background-color: transparent;
+    border: none;
+}
+.hero #search-hero::placeholder {
+    color: inherit;
+    text-decoration: underline;
+    font-style: italic;
 }
