@@ -1,14 +1,14 @@
 {
     "port": 80,
-    "named": {
-        "system": "sys",
-        "search": "search",
-        "type": "domain",
+    "query": {
+        "name": "read",
+        "querySearch": "search",
+        "queryType": "type",
         "prevent": "prevent"
     },
     "main_path": "./pages/",
     "replacers": {
-        "articles": "{{ article }}",
+        "articles": "\" article \"",
         "searchers": "\" result \""
     },
     "html_files": {

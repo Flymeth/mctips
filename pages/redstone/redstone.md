@@ -5,4 +5,4 @@
 <===>
 
 # LA REDSTONE
-La redstone vous permet de créer tout sorte de systeme plus où moins compliqué dans Minecraft
+La redstone vous permet de créer tout sorte de systeme plus ou moins compliqué dans Minecraft

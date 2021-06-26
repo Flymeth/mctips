@@ -6,7 +6,7 @@
     <title>Article</title>
 
     <meta name="title" content="Article">
-    <meta name="block_templates" content="footer">
+    <meta name="block_templates" content="header">
 
     <link rel="stylesheet" href="/css/custom/article.css">
 </head>
@@ -14,13 +14,23 @@
 <body>
   <main>
     <div class="content">
-      <article>
-        {{ article }}
+      <h1 class="article-name"></h1>
+      <p class="article-description"></p>
+      <article class="article-content">
       </article>
     </div>
   </main>
 
   <script src="/js/headerMENU.js"></script>
   <script src="/js/setElements.js"></script>
+  <script src="/js/custom/showContentArticle.js"></script>
+
+  <script class="show-articles">
+    window.onload = () => {
+        showArticle(" article ")
+        let a = document.querySelector('.show-articles')
+        a.parentElement.removeChild(a)
+    }
+  </script>
 </body>
 </html>

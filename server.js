@@ -9,27 +9,18 @@ let srv = http.createServer().listen(configs.port).on('listening', () => {
 })
 
 srv.on('request', (req, res) => {
-  let reqByUser = req.headers.referer === undefined || req.headers['sec-fetch-mode'] === "navigate"
+  if(!req.headers['sec-fetch-mode']) {
+    return res.end('TON NAVIGATEUR PU LA MERDE')
+  }
+
+  let reqByUser = !req.headers.referer || req.headers['sec-fetch-mode'] === "navigate"
   
   let reqURL = ('http://'+req.headers.host).split('http://').join('http://') + req.url
 
   let urlInfos = url.parse(decodeURI(reqURL))
 
-  let sysType;
-  let sysName;
-  let sysSearch;
-  let prevent;
-  let sysSearchType;
-  let sysDomain;
+  let prevent = urlInfos.query ? urlInfos.query.split(' ').join('').split('&').find(e => e.split('=')[0] === configs.query.prevent) : undefined
 
-  if(urlInfos.query) {
-    sysType = urlInfos.pathname.replace('/','')
-    sysName = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.system)
-    sysSearch = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.search)
-    sysSearchType = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.type)
-    prevent = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.named.prevent)
-  }
-  
   if(!reqByUser || prevent) {
     if(urlInfos.path === '/') return goIndex()
     let accept = req.headers.accept.split(',').find(t => t.includes(urlInfos.pathname.split('.')[1]))
@@ -41,26 +32,30 @@ srv.on('request', (req, res) => {
       res.end(f)
     })
   }
-
-  let path = urlInfos.pathname.replace('/','')
-
-  for(let type of configs.domain_types_path) {
-    if(path === type) {
-      sysDomain = path
-      if(!sysSearch) sysSearch = configs.prefix_show_all_articles
+  
+  let query = {}
+  if(urlInfos.query) {
+    for(let q in configs.query) {
+      let element = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.query[q])
+      if(element && element.split('=')[1]) {
+        query[configs.query[q]] = decodeURI(element.toLowerCase().split('=')[1]).split(' ').join('+').split('+')
+      }
     }
   }
 
-  // article
-  if(sysName) {
-
-    // READ TIPS
-
-    if (!sysName) {
-      return res.end('Page hasnt found!')
+  
+  let pathname = urlInfos.pathname.replace('/','')
+  for(let type of configs.domain_types_path) {
+    if(pathname === type) {
+      query[configs.query.queryType] = [pathname]
+      if(!query[configs.query.querySearch]) query[configs.query.querySearch] = [configs.prefix_show_all_articles]
     }
-    
-    let filePath = configs.main_path + sysType + '/' + sysName.split('%20').join(' ').split('=')[1] + ".md"
+  }
+
+
+  // read article
+  if(query[configs.query.name]) {
+    let filePath = configs.main_path + query[configs.query.queryType] + '/' + query[configs.query.name] + ".md"
     
     try {
       var article = fs.readFileSync(filePath).toString()
@@ -73,19 +68,21 @@ srv.on('request', (req, res) => {
     } catch (e) {
       return res.end('Error when loaded the main page...')
     }
-    
-    article = marked(article.split(configs.md_desc_ender)[1])
-    initPage = initPage.replace(configs.replacers.articles, marked(article))
-    
+    let articlePart = article.split(configs.md_desc_ender)
+
+    article = {
+      "infos": JSON.stringify(articlePart[0]),
+      "content": marked(articlePart[1])
+    }
+
+    initPage = initPage.split(configs.replacers.articles).join(JSON.stringify(article))
+
     return res.end(initPage)
 
   }
   
   // search articles
-  if(sysSearch) {
-
-    // SEARCH TIPS
-
+  if(query[configs.query.querySearch]) {
     let articlesLinks = []
 
     try {
@@ -94,20 +91,18 @@ srv.on('request', (req, res) => {
       console.log(e);
       return res.end('An error as come. Developer has been target!')
     }
-
-    if(sysSearchType || sysDomain) {
+    
+    if(query[configs.query.queryType]) {
       try {
         let newSct = []
-        let searchTypes = sysDomain ? [sysDomain] : decodeURI(sysSearchType).replace(' '+'+').split('=')[1].split('+')
         for(let fType of sct) {
-          for(let type of searchTypes) {
+          for(let type of query[configs.query.queryType]) {
             if(fType === type) {
               newSct.push(fType)
             }
           }
         }
         sct = newSct
-
       } catch (e) {
         console.log(e);
       }
@@ -124,7 +119,7 @@ srv.on('request', (req, res) => {
         for(let md of files) {
           articlesLinks.push({
             "path": configs.main_path + f + '/' + md,
-            "link": f + `?${configs.named.system}=` + md.replace('.md','')
+            "link": '/' + f + `?${configs.query.name}=` + md.replace('.md','')
           })
         }
       }
@@ -132,15 +127,11 @@ srv.on('request', (req, res) => {
 
     let searchKeys;
 
-    if(sysSearch.split('=').length == 1 || sysSearch === configs.prefix_show_all_articles) {
+    if(query[configs.query.querySearch].join('') === configs.prefix_show_all_articles) {
       searchKeys = " "
     }else {
-      searchKeys = sysSearch.toString().split('=')[1].split('%20').join('+').toLowerCase().split('+')
-      if(searchKeys.length === 1 && searchKeys[0] === '') return goIndex()
-      
-      if(searchKeys[0] === configs.prefix_show_all_articles) {
-        searchKeys = " "
-      }
+      searchKeys = query[configs.query.querySearch]
+      if(!searchKeys.join('')) return goIndex()
     }
 
     let articlesFounded = []
