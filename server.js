@@ -9,10 +9,6 @@ let srv = http.createServer().listen(configs.port).on('listening', () => {
 })
 
 srv.on('request', (req, res) => {
-  if(!req.headers['sec-fetch-mode']) {
-    return res.end('TON NAVIGATEUR PU LA MERDE')
-  }
-
   let reqByUser = !req.headers.referer || req.headers['sec-fetch-mode'] === "navigate"
   
   let reqURL = ('http://'+req.headers.host).split('http://').join('http://') + req.url
