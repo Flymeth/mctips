@@ -1,15 +1,20 @@
-let http = require('http')
+let server = require('http')
 let fs = require('fs')
 let url = require('url')
 let marked = require('marked')
 let configs = require('./configs.json')
 
-let srv = http.createServer().listen(configs.port).on('listening', () => {
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+let srv = server.createServer(options).listen(configs.port).on('listening', () => {
   console.log('listen on port ' + srv.address().port);
 })
 
 srv.on('request', (req, res) => {
-  let reqByUser = !req.headers.referer || req.headers['sec-fetch-mode'] === "navigate"
+  let reqByUser = req.headers['sec-fetch-mode'] === "navigate" || req.headers['sec-fetch-user'] === "?1" 
   
   let reqURL = ('http://'+req.headers.host).split('http://').join('http://') + req.url
 

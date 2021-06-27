@@ -27,6 +27,10 @@
         margin: 15pt 0;
     }
 
+    header.open {
+        background-color: rgba(0, 0, 0, .75);
+    }
+
     /* search */
     .result-scroller {
         width: 100% !important;
@@ -45,8 +49,6 @@
     header .menu label sub {
         display: none;
     }
-
-    
 
     .hero .texts h1 {
         font-size: 25pt !important;

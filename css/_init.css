@@ -35,6 +35,9 @@ body {
     color: var(--color-black);
     overflow-x: hidden;
 }
+body.noscroll {
+    overflow: hidden;
+}
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Minecraftia', sans-serif;
@@ -45,4 +48,15 @@ h1{
     color: var(--color-green);
 
     text-shadow: .5pt .5pt 25pt var(--color-black);
+}
+
+a {
+    color: var(--color-darkgreen);
+    text-decoration: underline;
+
+    transition: .25s;
+}
+a:hover {
+    text-shadow: 0 0 10pt var(--color-black);
+    color: var(--color-white);
 }

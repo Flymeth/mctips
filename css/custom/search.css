@@ -62,3 +62,7 @@ article a.path {
     left: 50%;
     transform: translateX(-50%);
 }
+
+article .content {
+    margin-bottom: 15pt;
+}

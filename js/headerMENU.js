@@ -1,12 +1,18 @@
 window.addEventListener('load', () => {
     let menuBTN = document.querySelector("#menu");
-    let nav = document.querySelector("nav");
-    if(!menuBTN || !nav) return
+    let header = document.querySelector("header");
+    if(!menuBTN || !header) return
     menuBTN.addEventListener("change", (e) => {
         if (e.target.checked) {
-            nav.classList.add("open");
+            header.classList.add("open");
+            if(Mobile) {
+                document.body.classList.add('noscroll')
+            }
         } else {
-            nav.classList.remove("open");
+            header.classList.remove("open");
+            if(Mobile) {
+                document.body.classList.remove('noscroll')
+            }
         }
     });
 })

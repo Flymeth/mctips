@@ -18,12 +18,11 @@ header {
 
     background-color: rgba(0, 0, 0, .5);
 
-    /* -webkit-backdrop-filter: blur(2.5px);
-    backdrop-filter: blur(2.5px); */
-
     box-shadow: 0 0 25pt var(--color-blue);
 
     z-index: 1;
+
+    transition: background-color .25s ease-in-out;
 }
 
 header>a {
@@ -90,7 +89,7 @@ header nav .menu label {
 
     transition: border-radius .25s;
 }
-header nav.open .menu label {
+header.open nav .menu label {
     border-radius: 2.5pt 2.5pt 0 0;
 }
 
@@ -114,18 +113,18 @@ header nav .menu label>.bars>* {
     transition-duration: .25s;
 }
 
-header nav.open .menu label>.bars>* {
+header.open nav .menu label>.bars>* {
     transition-property: transform;
 }
 
-header nav.open .menu .bars>.bar1 {
+header.open nav .menu .bars>.bar1 {
     transform-origin: top left;
     transform: rotate(45deg);
 }
-header nav.open .menu .bars>.bar2 {
+header.open nav .menu .bars>.bar2 {
     transform: scale(0);
 }
-header nav.open .menu .bars>.bar3{
+header.open nav .menu .bars>.bar3{
     transform-origin: bottom left;
     transform: rotate(-45deg);
 }
@@ -155,9 +154,10 @@ header nav .menu .menu-content {
 
 header ul, header ol {
     list-style: none;
+    font-size: 0.9em;
 }
 
-header nav.open .menu .menu-content {
+header.open nav .menu .menu-content {
     right: 0;
     opacity: 1;
 }
