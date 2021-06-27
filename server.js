@@ -56,8 +56,8 @@ srv.on('request', (req, res) => {
 
   // read article
   if(query[configs.query.name]) {
-    let filePath = configs.main_path + query[configs.query.queryType] + '/' + query[configs.query.name] + ".md"
-    
+    let filePath = configs.main_path + query[configs.query.queryType] + '/' + query[configs.query.name].join(' ') + ".md"
+
     try {
       var article = fs.readFileSync(filePath).toString()
     } catch (e) {

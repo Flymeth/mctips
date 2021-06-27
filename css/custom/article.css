@@ -12,16 +12,73 @@ main>.content {
 
     min-height: 100vh;
 }
+main>.content>h1 {
+    color: var(--color-darkgreen)
+}
 
 article {
     margin-top: 50pt;
-    background-color: var(--color-darkgreen);
     padding: 15pt;
     border-radius: 15pt;
+	
+	background-image: linear-gradient(to top, var(--color-darkgreen), var(--color-green))
 }
 
-article img {
-    max-width: 100%;
+article h1 {
+	color: var(--color-white)
+}
+
+article h2 {
+	font-size: 1em;
+	margin: 15pt 5pt;
+	color: var(--color-white)
+}
+
+article code {
+	padding: 2.5pt;
+	background-color: var(--color-black);
+	color: var(--color-green);
+	border-radius: 2.5pt;
+	
+	-webkit-user-select: all;
+	-moz-user-select: all;
+	user-select: all;
+}
+
+body article img {
     border-radius: 15pt;
     margin: 15pt auto;
+	max-height: 75vh;
+	display: block;
+	position: relative;
+}
+
+article ul {
+	list-style-position: inside;
+	list-style-type: "- "
+}
+
+article table {
+	border-collapse: collapse;
+	background-color: var(--color-green);
+	margin: 5pt 10pt;
+}
+
+article thead {
+	background-color: var(--color-black);
+	color: var(--color-white);
+	font-family: Minecraftia;
+	font-size: 0.9em;
+}
+
+article table th, article table td {
+	overflow: hidden;
+	padding: 5pt;
+	border: 2.5pt solid var(--color-marroun);
+	text-align: center;
+}
+
+article table tbody tr:nth-child(even) {
+	background-color: var(--color-darkgreen);
+	color: var(--color-green);
 }
