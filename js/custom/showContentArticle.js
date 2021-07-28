@@ -1,12 +1,8 @@
-function showArticle(json) {
-    let infos = JSON.parse(JSON.parse(json.infos))
-
-    // article content
-    document.querySelectorAll('.article-content').forEach(e => e.innerHTML = json.content)
-
-    for(let i in infos) {
+function showArticle(article) {
+    for(let i in article) {
+        console.log(i);
         document.querySelectorAll(`.article-${[i]}`).forEach(e => {
-            e.innerText = infos[i]
+            e.innerHTML = article[i]
         })
     }
 }

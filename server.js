@@ -14,17 +14,18 @@ let srv = server.createServer(options).listen(configs.port).on('listening', () =
 })
 
 srv.on('request', (req, res) => {
-  let reqByUser = req.headers['sec-fetch-mode'] === "navigate" || req.headers['sec-fetch-user'] === "?1" 
-  
+  let reqByUser = req.headers['sec-fetch-mode'] === "navigate" || req.headers['sec-fetch-user'] === "?1" || req.headers['upgrade-insecure-requests']
+
   let reqURL = ('http://'+req.headers.host).split('http://').join('http://') + req.url
 
   let urlInfos = url.parse(decodeURI(reqURL))
 
   let prevent = urlInfos.query ? urlInfos.query.split(' ').join('').split('&').find(e => e.split('=')[0] === configs.query.prevent) : undefined
 
+  console.log(reqByUser);
   if(!reqByUser || prevent) {
     if(urlInfos.path === '/') return goIndex()
-    let accept = req.headers.accept.split(',').find(t => t.includes(urlInfos.pathname.split('.')[1]))
+    let accept = req.headers.accept ? req.headers.accept.split(',').find(t => t.includes(urlInfos.pathname.split('.')[1])) : null
     return fs.readFile('.' + urlInfos.pathname, (err, f) => {
       if(err) return res.end(err.toString())
       if(accept) {
@@ -33,25 +34,190 @@ srv.on('request', (req, res) => {
       res.end(f)
     })
   }
-  
-  let query = {}
+
+  // new
+
   if(urlInfos.query) {
-    for(let q in configs.query) {
-      let element = urlInfos.query.split('&').find(e => e.split('=')[0] === configs.query[q])
-      if(element && element.split('=')[1]) {
-        query[configs.query[q]] = decodeURI(element.toLowerCase().split('=')[1]).split(' ').join('+').split('+')
-      }
+    var q = {}
+    for(let query of urlInfos.query.split('&')) {
+      let splited = query.split('=')
+      q[decodeURI(splited[0]).toLowerCase().split(' ').join('_')] = decodeURI(splited[1]).split(' ').join('+').split('+')
     }
   }
 
-  
-  let pathname = urlInfos.pathname.replace('/','')
-  for(let type of configs.domain_types_path) {
-    if(pathname === type) {
-      query[configs.query.queryType] = [pathname]
-      if(!query[configs.query.querySearch]) query[configs.query.querySearch] = [configs.prefix_show_all_articles]
-    }
+  const pageInformations = {
+    page: urlInfos.pathname,
+    query: q
   }
+
+  console.log(pageInformations);
+
+  switch (pageInformations.page.toLowerCase()) {
+
+    // search for articles
+    case "/search":
+      // if there is not query keys
+      if(!pageInformations.query) return goIndex()
+      let keys = pageInformations.query[configs.query.querySearch]
+      let versions = pageInformations.query[configs.query.queryVersion]
+      let types = pageInformations.query[configs.query.queryType]
+      if(!keys && !versions && !types) return goIndex()
+      if(!keys || keys.join('') === '__all') keys = ['']
+
+      // find folders
+      let folders = []
+      if(pageInformations.query[configs.query.queryType]) {
+        folders = pageInformations.query[configs.query.queryType]
+      }else {
+        folders = fs.readdirSync(configs.main_path)
+      }
+
+      // find articles (in the folders)
+      let articles = {}
+      for(let folder of folders) {
+        try {
+          articles[folder] = fs.readdirSync(configs.main_path + folder)
+        } catch (e) {}
+      }
+
+      // find articles that match with the query keys
+      let foundArticles = []
+      for(let domain in articles) {
+        for(let article of articles[domain]) {
+          try {
+            var fileContent = fs.readFileSync(configs.main_path + domain + '/' + article, {encoding: 'utf-8'}).toString()
+          } catch (err) {}
+
+          var articleInformations = getArticleInformations(fileContent.toString(), domain, article)
+          if(!articleInformations) continue
+          delete articleInformations.content
+
+          if(keys.join('') === configs.prefix_show_all_articles) foundArticles[configs.main_path + domain + '/' + article] = {points: 0, article: articleInformations}
+          else {
+            let points = 0
+            for(let info in articleInformations) {
+              for(let key of keys) {
+                if(articleInformations[info].toLowerCase().includes(key.toLowerCase())) {
+                  if(configs.points[info]) {
+                    points+=configs.points[info]
+                  }
+                }
+              }
+            }
+
+            if(points) {
+              foundArticles.push({
+                path: configs.main_path + domain + '/' + article,
+                points: points,
+                article: articleInformations
+              })
+            }
+          }
+        }
+
+        if(foundArticles) {
+
+          if(versions) {
+            for(let art in foundArticles) {
+              let needDelete = true
+              for(let version of versions) {
+                if(foundArticles[art].article.version && foundArticles[art].article.version.startsWith(version)) {
+                  needDelete = false
+                }
+              }
+
+              if(needDelete) foundArticles.splice(art)
+            }
+          }
+  
+          if(types) {
+            for(let art in foundArticles) {
+              for(let type of types) {
+                let needDelete = true
+                if(foundArticles[art].article.type && foundArticles[art].article.type.startsWith(type)) {
+                  needDelete = false
+                }
+
+                if(needDelete) foundArticles.splice(art)
+              }
+            }
+          }
+
+        }
+
+      }
+
+      fs.readFile(configs.html_files.searchers, (err, data) => {
+        if(err) {
+          res.writeHead(404, "The requested file haven't been finded...")
+          res.end('ERROR')
+          return
+        }
+
+        res.writeHead(200)
+        res.write(data.toString().replace(configs.replacers.searchers, JSON.stringify(foundArticles)))
+        res.end()
+      })
+    break;
+
+    // read article
+    case '/article': 
+      let type = pageInformations.query[configs.query.queryType]  
+      let file = pageInformations.query.name.join(' ')
+      if(!type || !file) return goIndex()  
+
+      let article = fs.readFileSync(configs.main_path + type + '/' + file).toString()
+      let articleInfos = getArticleInformations(article, type, file)
+      
+      articleInfos.content = marked.parse(articleInfos.content)
+
+      let data = fs.readFileSync(configs.html_files.articles, {encoding: 'utf-8'}).toString()
+      data = data.replace(configs.replacers.articles, JSON.stringify(articleInfos))
+
+      res.writeHead(200)
+      res.write(data)
+      res.end()
+    break
+
+    default:
+      goIndex()
+    break;
+  }
+
+  /**
+   * @param fileContent The string content
+   * @param type The type of the article
+   * @param fileName The name of the file
+   * @returns JSON Object
+   */
+  function getArticleInformations(fileContent, type, fileName) {
+    fileContent = fileContent.toString()
+    let articleInformations = {}
+    while(fileContent.startsWith('\n') || fileContent.startsWith(' ')) {
+      if(fileContent.startsWith('\n')) {
+        fileContent.replace('\n','')
+      }else {
+        fileContent.replace(' ','')
+      }
+    }
+
+    let splited = fileContent.split('\n')
+
+    while(splited[0].startsWith('@')) {
+      let info = splited.shift()
+      let content = info.split(' ')
+      articleInformations[content.shift().toLowerCase().replace('@','')] = content.join(' ').split('\r').join('')
+    }
+
+    articleInformations.path = type + '/' + fileName
+    articleInformations.type = type
+    articleInformations.file = fileName
+    articleInformations.content = splited.join('\n')
+
+    return articleInformations
+  }
+
+  return
 
 
   // read article

@@ -1,9 +1,6 @@
-{
-    "name":"Les sélécteurs",
-    "description":"Avec les commandes blocks il est très simple de cibler un joueur. Mais savez-vous utiliser tous les sélécteurs correctement ?",
-	"version":"1.16.4"
-}
-<===>
+@name Les sélécteurs
+@description Avec les commandes blocks il est très simple de cibler un joueur. Mais savez-vous utiliser tous les sélécteurs correctement ?
+@version 1.15 1.16
 
 # Items:
 - chat/command blocks

@@ -3,46 +3,30 @@ function showArticles(result) {
 
     typeof result === JSON;
 
-    let datas = result.sort((d1, d2) => d2.searchPoints - d1.searchPoints);
+    let datas = result.sort((d1, d2) => d2.points - d1.points);
     let elementPrefix = "__";
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/templates/article.html");
     xhr.send();
-    xhr.onload = () => {
-        for (let d of datas) {
-            let doc = xhr.response;
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState !== 4) return;
+        for(let d of datas) {
+            let template = document.createElement("article")
+            template.innerHTML = xhr.response;
 
-            let template = document.createElement("article");
-            typeof template === XMLDocument;
-            template.innerHTML = doc;
+            for (let e in d.article) {
+                template.querySelectorAll('*[data-text=' + e + "]").forEach(element => element.innerText = d.article[e])
+                template.querySelectorAll('*[data-src=' + e + "]").forEach(element => element.src = d.article[e])
+                template.innerHTML = template.innerHTML.split(elementPrefix + e).join(d.article[e])   
+            }
 
-            for (let e in d) {
-                let docString = template.innerHTML.split(elementPrefix + e);
-                let elements = template.querySelectorAll(
-                    `.${elementPrefix}${e}`
-                );
-
-                if (elements.length > 0) {
-                    elements.forEach((el) => {
-                        el.innerText = "(" + d[e] + ")";
-                    });
-                } else if (docString.length > 1) {
-                    template.innerHTML = docString.join(d[e]);
+            template.querySelectorAll('*[src]').forEach(element => {
+                let url = new URL(element.src)
+                if(url.pathname.startsWith('/' + elementPrefix)) {
+                    element.parentElement.removeChild(element)
                 }
-            }
-
-            // check if element with "src" attribute has a src content
-            let src = template.querySelectorAll("*[src]");
-            if (src.length > 0) {
-                src.forEach((s) => {
-                    let url = new URL(s.src);
-                    let needDel = url.pathname.startsWith("/" + elementPrefix);
-                    if (needDel) {
-                        s.parentElement.removeChild(s);
-                    }
-                });
-            }
+            })
 
             articlesContainer.appendChild(template);
         }

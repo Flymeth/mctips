@@ -1,8 +1,5 @@
-{
-    "name":"Fichier exemple build",
-    "description":"Ceci est un fichier exemple pour la partie \"build\""
-}
-<===>
+@name Build
+@description Ceci est un fichier test pour le build
 
-# LE BUILD
-le build est l'art de construire des choses dans Minecraft.
+# Le build
+le build est le fait de créer des choses dans mincraft

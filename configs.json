@@ -1,9 +1,10 @@
 {
     "port": 80,
     "query": {
-        "name": "read",
-        "querySearch": "search",
+        "name": "article",
+        "querySearch": "keys",
         "queryType": "type",
+        "queryVersion": "version",
         "prevent": "prevent"
     },
     "main_path": "./pages/",
@@ -23,5 +24,12 @@
         "build",
         "other"
     ],
-    "prefix_show_all_articles": "__all"
+    "prefix_show_all_articles": "__all",
+
+    "points": {
+        "name": 15,
+        "description": 10,
+        "version": 5,
+        "content": 1
+    }
 }

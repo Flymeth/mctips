@@ -7,13 +7,13 @@ header {
 main>.content {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
 
     min-height: 100vh;
 }
 main>.content>h1 {
-    color: var(--color-darkgreen)
+    color: var(--color-darkgreen);
+	text-align: center;
 }
 
 article {
@@ -21,11 +21,12 @@ article {
     padding: 15pt;
     border-radius: 15pt;
 	
-	background-image: linear-gradient(to top, var(--color-darkgreen), var(--color-green))
+	background-image: linear-gradient(to top, var(--color-darkgreen), var(--color-green));
+	max-width: 100%;
 }
 
 article h1 {
-	color: var(--color-white)
+	color: var(--color-white);
 }
 
 article h2 {
@@ -49,6 +50,7 @@ body article img {
     border-radius: 15pt;
     margin: 15pt auto;
 	max-height: 75vh;
+	max-width: 100%;
 	display: block;
 	position: relative;
 }

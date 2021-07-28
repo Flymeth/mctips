@@ -6,8 +6,8 @@
     <h1 class="page-title"></h1>
 
     <nav>
-        <form method="GET" class="search">
-            <input type="search" name="search" id="search" placeholder="search articles" tabindex="1">
+        <form method="GET" action="/search" class="search">
+            <input type="search" name="keys" id="search" placeholder="search articles" tabindex="1">
         </form>
 
         <div class="menu">
@@ -31,19 +31,19 @@
 
             <div class="menu-content">
                 <ul>
-                    <li class="title"><a href="/build">Build</a></li>
+                    <li class="title"><a href="/search?type=build">Build</a></li>
                     <li><!-- Name here --></li>
                 </ul>
                 <ul>
-                    <li class="title"><a href="/redstone">Redstone</a></li>
+                    <li class="title"><a href="/search?type=redstone">Redstone</a></li>
                     <li><!-- Name here --></li>
                 </ul>
                 <ul>
-                    <li class="title"><a href="/commands">Commandes</a></li>
+                    <li class="title"><a href="/search?type=commands">Commandes</a></li>
                     <li><!-- Name here --></li>
                 </ul>
                 <ul>
-                    <li class="title"><a href="/other">Autre</a></li>
+                    <li class="title"><a href="/search?type=redstone">Autre</a></li>
                     <li><!-- Name here --></li>
                 </ul>
             </div>
